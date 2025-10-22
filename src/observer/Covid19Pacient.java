@@ -1,4 +1,4 @@
-package domain;
+package observer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,24 +7,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
+
+import domain.ISymptomFactory;
+import domain.Symptom;
+import domain.SymptomFactory;
 import iterator.Covid19PacientIterator;
 
-public class Covid19Pacient {
+public class Covid19Pacient extends Observable{
 	private String  name; 
 	private int age;
-	ISymptomFactory sf;
+	ISymptomFactory sf = new SymptomFactory();
 	private Map<Symptom,Integer> symptoms=new HashMap<Symptom,Integer>();
 
-	public Covid19Pacient(String name, int years, ISymptomFactory tipo) {
-		this.name = name;
-		this.age = years;
-		this.sf = tipo;
-	}
-	
 	public Covid19Pacient(String name, int years) {
 		this.name = name;
 		this.age = years;
-		this.sf = new SymptomFactory();
 	}
 	
 	public String getName() {
@@ -59,20 +56,27 @@ public class Covid19Pacient {
 
 	public void addSymptom(Symptom c, Integer w){
 		symptoms.put(c,w);
+
 	}
 	
 	public Symptom addSymptomByName(String symptom, Integer w){
 		Symptom s=null;
 		s=createSymptom(symptom); 
 		if (s!=null) 
-			symptoms.put(s,w);		
+			symptoms.put(s,w);	
+			setChanged();
+			notifyObservers();
 		return s;
 	}
 
 	public Symptom removeSymptomByName(String symptomName) {
 		Symptom s=getSymptomByName(symptomName);
 		System.out.println("Simptom to remove: "+s);
-		if (s!=null) symptoms.remove(s);
+		if (s!=null) {
+			symptoms.remove(s);
+			setChanged();
+			notifyObservers();
+		}
 		return s;
 	}
 	public Iterator iterator() {
@@ -103,5 +107,7 @@ public class Covid19Pacient {
 	    return sf.createSymptom(symptomName);		
 		
 	}
+
+
 }
 
