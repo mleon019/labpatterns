@@ -12,17 +12,17 @@ import domain.Covid19Pacient;
 public class ShowPacientTableGUI extends JFrame{
 	
 	JTable table;
-	Covid19Pacient pacient;
+	observer.Covid19Pacient pacient;
 	
   
-  public ShowPacientTableGUI(Covid19Pacient pacient ) {
-	  	this.setTitle("Covid Symptoms "+pacient.getName());
+  public ShowPacientTableGUI(observer.Covid19Pacient pacient2 ) {
+	  	this.setTitle("Covid Symptoms "+pacient2.getName());
 	  	
-	  	this.pacient=pacient;
+	  	this.pacient=pacient2;
 	  	
 	  	setFonts();
 	    
-	  	TableModel tm=new Covid19PacientTableModelAdapter(pacient);
+	  	TableModel tm=new Covid19PacientTableModelAdapter(pacient2);
 		table = new JTable(tm);
 	    table.setRowHeight(36);
 	    JScrollPane pane = new JScrollPane(table);
