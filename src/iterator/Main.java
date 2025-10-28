@@ -24,26 +24,23 @@ import domain.Symptom;
 			p.addSymptom(new Symptom("Tardes", 8, 1), 3);
 			p.addSymptom(new Symptom("Caballero", 10, 7), 4);
 			p.addSymptom(new Symptom("Dama", 3, 10), 5);
-			
-			Iterator i=p.iterator();
-			while(i.hasNext())
-				System.out.println(i.next());
-			
+						
 			InvertedIterator pa = new PatronAdapter(p.getSymptoms());
 			CompName comparador = new CompName();
 			Iterator ordenado = Sorting.sortedIterator(pa, comparador);
 			
-			Set<Symptom> casi = new HashSet<>();
-			Symptom siguiente = null;
+			System.out.println("Ordenado alfabeticamente");
+
 			while(ordenado.hasNext())
-				siguiente = (Symptom) ordenado.next();
-				casi.add(siguiente);
-				System.out.println(siguiente);
+				System.out.println(ordenado.next());
 				
 			
-			pa = new PatronAdapter(casi);
+			pa = new PatronAdapter(p.getSymptoms());
 			CompIndex comparador1 = new CompIndex();
 			Iterator ordenado1 = Sorting.sortedIterator(pa, comparador1);
+			
+			System.out.println("Ordenado por severidad de menor a mayor");
+
 			
 			while(ordenado1.hasNext())
 				System.out.println(ordenado1.next());
